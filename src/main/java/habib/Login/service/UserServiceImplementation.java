@@ -35,7 +35,7 @@ public class UserServiceImplementation implements UserService {
         String email = jwtProvider.getEmailFromJwtToken(jwt);
 
         if(email == null){
-            throw new Exception("Provide a jwt Token.!!!");
+            throw new Exception("Provide a valid jwt Token.!!!");
         }
 
         User user =userRepository.findByEmail(email);

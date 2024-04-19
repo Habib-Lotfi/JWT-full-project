@@ -27,7 +27,7 @@ public class JWTProvider {
     public String getEmailFromJwtToken(String jwt){
 
         jwt = jwt.substring(7);
-        Claims claims = (Claims) Jwts.parser().verifyWith(key).build().parseSignedClaims(jwt).getBody();
+        Claims claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(jwt).getBody();
 
         String email = String.valueOf(claims.get("email"));
 

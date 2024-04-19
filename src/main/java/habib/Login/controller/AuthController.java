@@ -71,12 +71,12 @@ public class AuthController {
     }
 
     @PostMapping("/signing")
-    public AuthResponse signupHandler(@RequestBody LoginRequest loginRequest) {
+    public AuthResponse signingHandler(@RequestBody LoginRequest loginRequest) {
 
-        String userEmail = loginRequest.getEmail();
+        String username = loginRequest.getEmail();
         String password = loginRequest.getPassword();
 
-        Authentication authentication = authenticate(userEmail, password);
+        Authentication authentication = authenticate(username, password);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 //        assert authentication != null;
         String token = jwtProvider.generateToken(authentication);
@@ -90,18 +90,18 @@ public class AuthController {
         return response;
     }
 
-    private Authentication authenticate(String userEmail, String password) {
+    private Authentication authenticate(String username, String password) {
 
-        UserDetails userDetails = customUserDetailsService.loadUserByUsername(userEmail);
+        UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
 
         if (userDetails == null) {
 
-            throw new BadCredentialsException("User not found with email::: " + userEmail);
+            throw new BadCredentialsException("User not found with email::: " + username);
         }
 
         if (!passwordEncoder.matches(password, userDetails.getPassword())) {
 
-            throw new BadCredentialsException("Invalid Password..!!! ");
+            throw new BadCredentialsException("1) Invalid Password...!!! ");
 
         }
 
